@@ -3,7 +3,7 @@
 from .anims import ANIMS, ATTACKS
 
 
-class Combo:
+class Combat:
     def __init__(self):
         self.step = None        # index into ATTACKS, None when not attacking
         self.tick = 0           # frames spent in the current swing

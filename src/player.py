@@ -1,6 +1,6 @@
 """Player state, movement physics and animation state."""
 
-from .combo import Combo
+from .combat import Combat
 from .config import TILE
 from .input import Controls
 from .player_config import (
@@ -24,7 +24,7 @@ class Player:
         self.running = 0
         self.blocking = 0
         self.attacking = 0
-        self.combo = Combo()
+        self.combat = Combat()
         self.state = "idle"     # animation name, see anims.ANIMS
         self.anim_tick = 0      # frames spent in the current state
 
@@ -41,7 +41,7 @@ class Player:
             self._ground(c)
         if not self.on_ground:
             # In the air: vx stays whatever it was at takeoff; no attack or block
-            self.combo.cancel()
+            self.combat.cancel()
             self.blocking = 0
             self.vy = min(self.vy + GRAVITY, MAX_FALL)
 
@@ -50,13 +50,13 @@ class Player:
         self._probe_ground()
         self._update_flags()
         self._animate()
-        self.combo.update()
+        self.combat.update()
 
     def _ground(self, c):
         if c.attack:
-            self.combo.press()
+            self.combat.press()
         move = c.right - c.left
-        if self.combo.active:
+        if self.combat.active:
             self.blocking = 0
             self.vx = 0.0       # mid-swing: rooted, facing locked
             return
@@ -76,7 +76,7 @@ class Player:
         self.in_air = 1 - self.on_ground
         self.moving = int(self.vx != 0)
         self.running = int(abs(self.vx) > WALK_SPEED)
-        self.attacking = int(self.combo.active)
+        self.attacking = int(self.combat.active)
         self.standing = int(
             self.on_ground and not (self.moving or self.blocking or self.attacking)
         )
@@ -86,7 +86,7 @@ class Player:
         if self.in_air:
             state = "jump"
         elif self.attacking:
-            state = self.combo.name
+            state = self.combat.name
         elif self.blocking:
             state = "block"
         elif self.running:

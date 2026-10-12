@@ -21,8 +21,8 @@ SPRITE_COLKEY = 0
 # name: (frames, ticks per frame, loop)
 ANIMS = {
     "idle": (7, 8, True),
-    "walk": (8, 6, True),
-    "run": (8, 4, True),
+    "walk": (8, 7, True),
+    "run": (8, 5, True),
     "jump": (5, 8, False),          # in game the frame comes from vy (JUMP_VY); ticks are for the debug preview
     "block": (6, 4, False),
     "damage": (4, 4, False),
