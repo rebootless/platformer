@@ -1,4 +1,4 @@
-"""All tunable constants in one place."""
+"""Window and world constants. Player constants live in player_config.py and anims.py."""
 
 from pathlib import Path
 
@@ -17,17 +17,3 @@ COLLISION_TILES = [
     (0, 1), (1, 1), (3, 0),
     (4, 0), (3, 1), (4, 1),
 ]
-
-# Physics (px per frame at 60 fps)
-WALK_SPEED = 1.0
-JUMP_SPEED = 3.0       # initial upward speed; fixed arc, no air control
-GRAVITY = 0.15
-MAX_FALL = 4.0
-
-# Player
-PLAYER_W = 10
-PLAYER_H = 24
-CROUCH_H = 16
-SPAWN_X = 16
-SPAWN_Y = 70
-PLAYER_COLOR = 8
