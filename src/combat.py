@@ -1,6 +1,6 @@
-"""Three-hit attack chain: pressing attack during a swing queues the next hit."""
+from .sprites import HERO
 
-from .anims import ANIMS, ATTACKS
+ATTACKS = ("attack_first", "attack_second", "attack_third")
 
 
 class Combat:
@@ -21,18 +21,16 @@ class Combat:
         if self.step is None:
             self.step, self.tick, self.queued = 0, 0, False
         elif self.step < len(ATTACKS) - 1:
-            self.queued = True      # a press during the last hit is ignored
+            self.queued = True  # a press during the last hit is ignored
 
     def cancel(self):
         self.step = None
 
     def update(self):
-        """Advance one frame; the swing ends after its full animation has played."""
         if self.step is None:
             return
         self.tick += 1
-        frames, ticks, _ = ANIMS[ATTACKS[self.step]]
-        if self.tick < frames * ticks:
+        if self.tick < HERO.anims[ATTACKS[self.step]].length:
             return
         if self.queued:
             self.step += 1

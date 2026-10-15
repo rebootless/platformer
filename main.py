@@ -7,6 +7,9 @@
 # Run the game
 # .venv/bin/pyxel run main.py
 
+# source .venv/bin/activate
+# python3 main.py
+
 from src.app import App
 
 if __name__ == "__main__":

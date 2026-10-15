@@ -1,9 +1,3 @@
-"""Keyboard / gamepad bindings and per-frame input snapshot.
-
-Move: arrows / A D.  Jump: Z / Space.  Attack: X (press again for the next hit).
-Block: C (hold).  Run: Shift (hold).
-"""
-
 from dataclasses import dataclass
 
 import pyxel

@@ -1,12 +1,10 @@
-"""Tilemap queries and drawing."""
-
 import pyxel
 
 from .config import COLLISION_TILES, SCREEN_H, SCREEN_W, TILE, TILEMAP
 
 
 def solid(px, py):
-    """True if the pixel position is inside a collision tile."""
+    # True if the pixel position is inside a collision tile.
     if px < 0 or px >= SCREEN_W:
         return True  # screen edges act as walls
     if py < 0:
@@ -15,7 +13,7 @@ def solid(px, py):
 
 
 def box_hits(x, y, w, h):
-    """True if the box overlaps any solid tile (samples corners and mid-height)."""
+    # True if the box overlaps any solid tile.
     return any(
         solid(px, py)
         for px in (int(x), int(x + w - 1))

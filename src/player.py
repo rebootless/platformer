@@ -1,5 +1,3 @@
-"""Player state, movement physics and animation state."""
-
 from .combat import Combat
 from .config import TILE
 from .input import Controls
@@ -16,6 +14,7 @@ class Player:
         self.vx = 0.0
         self.vy = 0.0
         self.dir = 1            # facing: 1 right, -1 left
+
         # State flags, always 0 or 1
         self.on_ground = 0
         self.in_air = 1
@@ -25,7 +24,7 @@ class Player:
         self.blocking = 0
         self.attacking = 0
         self.combat = Combat()
-        self.state = "idle"     # animation name, see anims.ANIMS
+        self.state = "idle"     # animation name
         self.anim_tick = 0      # frames spent in the current state
 
     @property
@@ -64,7 +63,7 @@ class Player:
             self.dir = move
         self.blocking = int(c.block)
         if self.blocking:
-            self.vx = 0.0       # shield up: can turn, can't move or jump
+            self.vx = 0.0       # block: can turn, can't move or jump
             return
         self.vx = move * (RUN_SPEED if c.run else WALK_SPEED)
         if c.jump:
@@ -82,7 +81,7 @@ class Player:
         )
 
     def _animate(self):
-        """Pick the animation from the flags, highest priority first."""
+        # Pick the animation from the flags, highest priority first.
         if self.in_air:
             state = "jump"
         elif self.attacking:
@@ -121,5 +120,5 @@ class Player:
         self.vy = 0.0
 
     def _probe_ground(self):
-        """Is there a floor right under the feet?"""
+        # Is there a floor right under the feet?
         self.on_ground = int(self.vy >= 0 and box_hits(self.x, self.y + 1, self.w, self.h))

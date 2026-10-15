@@ -1,5 +1,3 @@
-"""Application: window setup and main loop."""
-
 import pyxel
 
 from . import debug, player_view, world
@@ -24,5 +22,6 @@ class App:
     def draw(self):
         pyxel.cls(0)
         world.draw()
-        player_view.draw(self.player, *debug.preview())
+        if not debug.monster():
+            player_view.draw(self.player, *debug.preview())
         debug.draw(self.player)

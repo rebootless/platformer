@@ -1,5 +1,3 @@
-"""Window and world constants. Player constants live in player_config.py and anims.py."""
-
 from pathlib import Path
 
 # Window

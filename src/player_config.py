@@ -1,9 +1,7 @@
-"""Player body and movement constants."""
-
 # Movement (px per frame at 60 fps)
 WALK_SPEED = 1.0
 RUN_SPEED = 1.6
-JUMP_SPEED = 3.0       # initial upward speed; fixed arc, no air control
+JUMP_SPEED = 3.0  # initial upward speed; fixed arc, no air control
 GRAVITY = 0.15
 MAX_FALL = 4.0
 
