@@ -14,13 +14,14 @@ class App:
         player_view.load()
         self.player = Player(SPAWN_X, SPAWN_Y)
         pyxel.run(self.update, self.draw)
-
+        
     def update(self):
         debug.update()
         self.player.update(controls.read())
 
     def draw(self):
         pyxel.cls(0)
+        pyxel.camera(int(self.player.x - SCREEN_W/2), int(self.player.y - SCREEN_H/2))
         world.draw()
         if not debug.monster():
             player_view.draw(self.player, *debug.preview())
