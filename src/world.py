@@ -5,7 +5,7 @@ from .config import COLLISION_TILES, SCREEN_H, SCREEN_W, TILE, TILEMAP
 
 def solid(px, py):
     # True if the pixel position is inside a collision tile.
-    if px < 0 or px >= SCREEN_W:
+    if px < 0 or px >= pyxel.tilemaps[TILEMAP].width*TILE:
         return True  # screen edges act as walls
     if py < 0:
         return False
@@ -22,4 +22,4 @@ def box_hits(x, y, w, h):
 
 
 def draw():
-    pyxel.bltm(0, 0, TILEMAP, 0, 0, SCREEN_W, SCREEN_H, 0)
+    pyxel.bltm(0, 0, TILEMAP, 0, 0, pyxel.tilemaps[TILEMAP].width * TILE, pyxel.tilemaps[TILEMAP].height * TILE, 0)

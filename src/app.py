@@ -22,6 +22,7 @@ class App:
     def draw(self):
         pyxel.cls(0)
         pyxel.camera(int(self.player.x - SCREEN_W/2), int(self.player.y - SCREEN_H/2))
+        
         world.draw()
         if not debug.monster():
             player_view.draw(self.player, *debug.preview())
