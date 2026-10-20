@@ -94,7 +94,7 @@ def draw(player):
         pyxel.rectb(x, y, HERO.w, HERO.h, 5)                  # sprite cell
         _text(2, 2, f"{'live' if live else 'preview'}: {state}  frame {f + 1}/{HERO.anims[state].frames}  tick {tick}")
     pyxel.rectb(player.x, player.y, player.w, player.h, 11)   # hitbox
-    _text(2, 10, f"x {player.x:.1f}  y {player.y:.1f}  vx {player.vx:.1f}  vy {player.vy:.2f}")
+    _text(2, 10, f"x {player.x:.1f}  y {player.y:.1f}  vx {player.vx:.1f}  vy {player.vy:.2f}  hp {player.stats.hp}/{player.stats.max_hp}")
     _text(2, 18, (
         f"ground {player.on_ground}  air {player.in_air}  stand {player.standing}  "
         f"move {player.moving}  run {player.running}  block {player.blocking}  atk {player.attacking}"

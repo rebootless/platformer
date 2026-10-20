@@ -2,8 +2,9 @@ from .combat import Combat
 from .config import TILE
 from .input import Controls
 from .player_config import (
-    GRAVITY, JUMP_SPEED, MAX_FALL, PLAYER_H, PLAYER_W, RUN_SPEED, WALK_SPEED,
+    GRAVITY, JUMP_SPEED, MAX_FALL, MAX_HP, PLAYER_H, PLAYER_W, RUN_SPEED, WALK_SPEED,
 )
+from .stats import Stats
 from .world import box_hits
 
 
@@ -24,6 +25,7 @@ class Player:
         self.blocking = 0
         self.attacking = 0
         self.combat = Combat()
+        self.stats = Stats(MAX_HP)
         self.state = "idle"     # animation name
         self.anim_tick = 0      # frames spent in the current state
 
