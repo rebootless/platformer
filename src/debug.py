@@ -60,43 +60,53 @@ def preview():
     return name, _tick % HERO.anims[name].length
 
 
-def _text(x, y, s):
-    pyxel.text(x + 1, y + 1, s, 0)
-    pyxel.text(x, y, s, 7)
+def _monster_anim():
+    anim = _sheet.anims[_names[_slot - 1]]
+    tick = _tick % anim.length
+    return anim, tick, anim.frame(tick)
 
 
 def _monster(player):
     s = _sheet
-    name = _names[_slot - 1]
-    anim = s.anims[name]
-    tick = _tick % anim.length
-    f = anim.frame(tick)
+    anim, _, f = _monster_anim()
     flip = anim.mirror and player.dir != s.faces
     x = int(player.x + player.w / 2 - s.w / 2)
     y = int(player.y + player.h - s.h)
     pyxel.blt(x, y, _image(), f * s.w, anim.row * s.h, -s.w if flip else s.w, s.h, s.colkey)
     pyxel.rectb(x, y, s.w, s.h, 5)
-    _text(2, 2, f"{_labels[_pick]}: {name}  frame {f + 1}/{anim.frames}  tick {tick}")
 
 
 def draw(player):
+    # World-space overlays: sprite cell and hitbox.
     if not on:
         return
-    state, tick = preview()
-    live = state is None
-    if live:
-        state, tick = player.state, player.anim_tick
-    f = player_view.frame(state, tick, player.vy if live else None)
-    x, y, _ = player_view.origin(player, state)
     if _pick:
         _monster(player)
     else:
-        pyxel.rectb(x, y, HERO.w, HERO.h, 5)                  # sprite cell
-        _text(2, 2, f"{'live' if live else 'preview'}: {state}  frame {f + 1}/{HERO.anims[state].frames}  tick {tick}")
-    pyxel.rectb(player.x, player.y, player.w, player.h, 11)   # hitbox
-    _text(2, 10, f"x {player.x:.1f}  y {player.y:.1f}  vx {player.vx:.1f}  vy {player.vy:.2f}  hp {player.stats.hp}/{player.stats.max_hp}")
-    _text(2, 18, (
-        f"ground {player.on_ground}  air {player.in_air}  stand {player.standing}  "
-        f"move {player.moving}  run {player.running}  block {player.blocking}  atk {player.attacking}"
-    ))
-    _text(2, 26, "F1 animation  F2 monster  F3 debug")
+        state, _ = preview()
+        x, y, _ = player_view.origin(player, state or player.state)
+        pyxel.rectb(x, y, HERO.w, HERO.h, 5)
+    pyxel.rectb(player.x, player.y, player.w, player.h, 11)
+
+
+def info(player):
+    # Text lines for the HUD.
+    if _pick:
+        anim, tick, f = _monster_anim()
+        head = f"{_labels[_pick]}: {_names[_slot - 1]}  frame {f + 1}/{anim.frames}  tick {tick}"
+    else:
+        state, tick = preview()
+        live = state is None
+        if live:
+            state, tick = player.state, player.anim_tick
+        f = player_view.frame(state, tick, player.vy if live else None)
+        head = f"{'live' if live else 'preview'}: {state}  frame {f + 1}/{HERO.anims[state].frames}  tick {tick}"
+    return [
+        head,
+        f"x {player.x:.1f}  y {player.y:.1f}  vx {player.vx:.1f}  vy {player.vy:.2f}",
+        (
+            f"ground {player.on_ground}  air {player.in_air}  stand {player.standing}  "
+            f"move {player.moving}  run {player.running}  block {player.blocking}  atk {player.attacking}"
+        ),
+        "F1 animation  F2 monster  F3 debug",
+    ]
