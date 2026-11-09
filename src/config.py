@@ -1,8 +1,8 @@
 from pathlib import Path
 
-# Window
-SCREEN_W = 256
-SCREEN_H = 240
+# Window (1080p falls on an integer scale of ×6)
+SCREEN_W = 320
+SCREEN_H = 180
 TITLE = "platformer"
 FPS = 60
 ASSETS = str(Path(__file__).resolve().parent.parent / "assets.pyxres")
